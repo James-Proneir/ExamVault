@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NEET Prep Vault</title>
-<link rel="manifest" href="/pwa-app/manifest.json" />
+<link rel="manifest" href="/ExamVault/manifest.json" />
 <style>
 :root{--bg:#f6f7fb;--card:#fff;--tx:#1b1f2a;--mu:#6b7280;--ln:#e3e6ee;--pr:#4f46e5;--sel:#e0e7ff;--ok:#16a34a;--okb:#dcfce7;--bad:#dc2626;--badb:#fee2e2;--wr:#d97706;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1117;--card:#1a1d27;--tx:#e8eaf0;--mu:#9aa3b2;--ln:#2a2f3d;--pr:#818cf8;--sel:#2b2f55;--okb:#12341f;--badb:#3b1616}}
@@ -219,7 +219,7 @@ await load();render();
 </script>
 <script>
     if("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js",).then(()=>{
+        navigator.serviceWorker.register("/ExamVault/sw.js",).then(()=>{
             console.log("Service worker registered successfully.");
         }).catch((err)=>{
             console.log("Error : ", err);

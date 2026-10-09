@@ -2,10 +2,11 @@
 const CACHE_NAME = "filora-cache-v4";
 
 const ASSETS_TO_CACHE = [
- // "/pwa-app/",
-  "/pwa-app/index.html",
-  "/pwa-app/manifest.json",
-  "/img/jpps-logo.jpg",
+  "/ExamVault/",
+  "/ExamVault/index.html",
+  "/ExamVault/manifest.json",
+  "/ExamVault/img/icon-192.png",
+  "/ExamVault/img/icon-512.png",
  ];
 
 self.addEventListener("install", (event) => {

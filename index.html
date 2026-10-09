@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NEET Prep Vault</title>
+<link rel="manifest" href="/pwa-app/manifest.json" />
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1b1f2a;--mu:#6b7280;--ln:#e3e6ee;--pr:#4f46e5;--sel:#e0e7ff;--ok:#16a34a;--okb:#dcfce7;--bad:#dc2626;--badb:#fee2e2;--wr:#d97706;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1117;--card:#1a1d27;--tx:#e8eaf0;--mu:#9aa3b2;--ln:#2a2f3d;--pr:#818cf8;--sel:#2b2f55;--okb:#12341f;--badb:#3b1616}}
+:root[data-theme="dark"]{--bg:#0f1117;--card:#1a1d27;--tx:#e8eaf0;--mu:#9aa3b2;--ln:#2a2f3d;--pr:#818cf8;--sel:#2b2f55;--okb:#12341f;--badb:#3b1616}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{max-width:680px;margin:0 auto;padding:12px 12px 96px}
+h2,h3{margin:.2em 0 .5em}h3{font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:14px;margin:0 0 12px}
+.center{text-align:center}.mu{color:var(--mu);font-size:.85rem}
+label{display:block;font-size:.85rem;color:var(--mu);margin:8px 0}
+input,textarea,select{width:100%;margin-top:4px;padding:10px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:84px;resize:vertical}
+input[type=checkbox],input[type=radio]{width:auto;margin:0 8px 0 0;accent-color:var(--pr)}
+button{font:inherit;color:var(--tx);cursor:pointer}
+.btn{background:var(--pr);color:#fff;border:0;border-radius:12px;padding:12px 16px;width:100%;font-weight:600;margin-top:8px}
+.btn.sm{width:auto;margin:0;padding:8px 14px}
+.ghost{background:var(--card);border:1px solid var(--ln);border-radius:10px;padding:10px 12px}
+.ghost.on{background:var(--sel);border-color:var(--pr)}.wide{width:100%;margin-top:8px}
+.danger{color:var(--bad)}
+.row{display:flex;gap:8px;margin:10px 0}.row>*{flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.chip{border:1px solid var(--ln);background:var(--card);border-radius:999px;padding:6px 12px;font-size:.9rem}
+.chip.on{background:var(--pr);color:#fff;border-color:var(--pr)}.chip i{opacity:.7;font-style:normal;font-size:.75rem}
+.lbl{font-size:.8rem;color:var(--mu);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.04em}
+.seg{display:flex;background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;padding:8px;border-radius:9px}.seg .on{background:var(--pr);color:#fff}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;margin-bottom:6px}
+.sticky{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.tm{font-weight:700;font-variant-numeric:tabular-nums;font-size:1.2rem}.tm.low{color:var(--bad)}
+.q{font-size:1.05rem;overflow-x:auto}.q img,.nimg{max-width:100%;border-radius:10px;margin:8px 0;background:#fff}
+.meta{display:flex;justify-content:space-between;font-size:.78rem;color:var(--mu);margin-bottom:6px}
+.opt{display:flex;gap:10px;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--ln);border-radius:12px;padding:11px;margin-top:8px;overflow-x:auto}
+.opt b{min-width:24px;height:24px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-size:.8rem}
+.opt.sel{border-color:var(--pr);background:var(--sel)}.opt.ok{border-color:var(--ok);background:var(--okb)}.opt.bad{border-color:var(--bad);background:var(--badb)}
+.opt[data-a=""]{pointer-events:none}
+.exp{margin-top:12px;padding:10px;border-left:4px solid var(--pr);background:var(--bg);border-radius:8px;font-size:.95rem}
+.pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px;margin-top:10px}
+.pn{height:40px;border:1px solid var(--ln);border-radius:8px;background:var(--card)}
+.pn.ans{background:var(--ok);color:#fff;border-color:var(--ok)}.pn.rev{background:var(--wr);color:#fff;border-color:var(--wr)}.pn.cur{outline:2px solid var(--pr)}
+.orow{display:flex;align-items:center}.orow input[type=text],.orow input:not([type]){margin-top:4px}
+.score{font-size:2.2rem;font-weight:800;color:var(--pr)}
+.stats{display:flex;gap:8px;margin:10px 0}.stats div{flex:1;background:var(--bg);border-radius:10px;padding:8px}.stats b{display:block;font-size:1.2rem}
+.bdg{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--sel);color:var(--pr)}
+.bg2{height:8px;border-radius:4px;background:var(--ln);overflow:hidden;margin:4px 0 10px}.bg2 i{display:block;height:100%;background:var(--ok)}
+pre{background:var(--bg);padding:10px;border-radius:10px;overflow-x:auto;font-size:.75rem;white-space:pre-wrap}
+#nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px);z-index:9}
+#nav button{flex:1;border:0;background:none;padding:9px 0 7px;font-size:.7rem;color:var(--mu)}#nav button span{display:block;font-size:1.3rem}#nav .on{color:var(--pr);font-weight:700}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:9px 16px;border-radius:999px;font-size:.9rem;opacity:0;transition:.25s;pointer-events:none;z-index:20}#toast.on{opacity:.95}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+</style></head><body>
+<div id="app"></div>
+<nav id="nav">
+<button data-a="tab" data-v="practice"><span>📖</span>Practice</button>
+<button data-a="tab" data-v="test"><span>⏱️</span>Test</button>
+<button data-a="tab" data-v="add"><span>➕</span>Add</button>
+<button data-a="tab" data-v="notes"><span>📝</span>Notes</button>
+<button data-a="tab" data-v="more"><span>📊</span>More</button>
+</nav>
+<div id="toast"></div>
+<script type="module">
+const $=(s,e=document)=>e.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rich=s=>esc(s).replace(/\n/g,'<br>');
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const fmt=ms=>{ms=Math.max(0,Math.ceil(ms/1000));const h=ms/3600|0,m=ms%3600/60|0,s=ms%60;return(h?h+':'+String(m).padStart(2,'0'):m)+':'+String(s).padStart(2,'0')};
+let db={subjects:[],questions:[],notes:[],tests:[]},H=null;
+const S={tab:'practice',more:'menu',addm:'q',sel:{p:{subs:new Set,chs:new Set},t:{subs:new Set,chs:new Set}},mode:'all',tcnt:30,tmin:30,neg:true,rf:'all',img:'',ls:'',lc:'',nsub:'',nch:'',nq:'',bsub:'',bq:'',P:null,T:null,edit:null,nedit:null,nadd:false,cf:null};
+/* storage (IndexedDB) */
+const openDB=()=>new Promise((res,rej)=>{const r=indexedDB.open('neetvault',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+async function load(){try{H=await openDB();const v=await new Promise(res=>{const q=H.transaction('kv').objectStore('kv').get('db');q.onsuccess=()=>res(q.result);q.onerror=()=>res()});if(v)db=Object.assign(db,v)}catch(e){H=null}}
+const save=()=>{try{H&&H.transaction('kv','readwrite').objectStore('kv').put(db,'db')}catch(e){}};
+const qById=id=>db.questions.find(q=>q.id===id);
+function ensure(s,c){let x=db.subjects.find(z=>z.name===s);if(!x){x={id:uid(),name:s,chapters:[]};db.subjects.push(x)}if(c&&!x.chapters.includes(c))x.chapters.push(c)}
+function record(q,ok){q.st=q.st||{a:0,w:0};q.st.a++;if(!ok)q.st.w++;q.st.last=ok?'c':'w';save()}
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2200)};
+const toImg=f=>new Promise(res=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,900/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*k;c.height=i.height*k;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.78))};i.src=r.result};r.readAsDataURL(f)});
+/* LaTeX via MathJax (SVG, no CSS needed) */
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+const ts=()=>{try{window.MathJax&&MathJax.typesetPromise&&MathJax.typesetPromise([$('#app')]).catch(()=>{})}catch(e){}};
+{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js';s.async=true;s.onload=ts;document.head.appendChild(s)}
+/* filters */
+function pool(sel,mode){return db.questions.filter(q=>{if(sel.subs.size&&!sel.subs.has(q.subject))return false;const k=[...sel.chs].filter(x=>x.startsWith(q.subject+'||'));if(k.length&&!sel.chs.has(q.subject+'||'+q.chapter))return false;if(mode==='new')return !q.st;if(mode==='wrong')return q.st&&q.st.last==='w';if(mode==='star')return q.star;return true})}
+function fUI(w){const s=S.sel[w];if(!db.subjects.length)return'<p class="mu">No questions yet. Add some in the ➕ Add tab.</p>';
+let h='<div class="lbl">Subjects <small>(none = all)</small></div><div class="chips">'+db.subjects.map(x=>`<button class="chip ${s.subs.has(x.name)?'on':''}" data-a="fs" data-w="${w}" data-v="${esc(x.name)}">${esc(x.name)} <i>${db.questions.filter(q=>q.subject===x.name).length}</i></button>`).join('')+'</div>';
+db.subjects.filter(x=>s.subs.has(x.name)).forEach(x=>{h+=`<div class="lbl">${esc(x.name)} chapters <small>(none = all)</small></div><div class="chips">`+x.chapters.map(c=>{const k=x.name+'||'+c;return`<button class="chip ${s.chs.has(k)?'on':''}" data-a="fc" data-w="${w}" data-v="${esc(k)}">${esc(c)} <i>${db.questions.filter(q=>q.subject===x.name&&q.chapter===c).length}</i></button>`}).join('')+'</div>'});return h}
+/* question card */
+function qCard(q,o={}){const cl=i=>o.show?(i===q.ans?'ok':i===o.pick?'bad':''):(i===o.pick?'sel':'');
+return`<div class="card"><div class="meta"><span>${o.nometa?'':esc(q.subject)+' › '+esc(q.chapter)}</span>${o.nostar?'':`<button class="ghost" style="padding:2px 8px" data-a="star" data-id="${q.id}">${q.star?'★':'☆'}</button>`}</div><div class="q">${rich(q.q)}${q.img?`<br><img src="${q.img}" alt="">`:''}</div>`+
+q.o.map((t,i)=>`<button class="opt ${cl(i)}" data-a="${o.act||''}" data-i="${i}"><b>${'ABCDEF'[i]}</b><span>${rich(t)}</span></button>`).join('')+
+(o.show&&q.exp?`<div class="exp"><b>Explanation</b><br>${rich(q.exp)}</div>`:'')+'</div>'}
+/* views */
+function practiceHome(){const n=pool(S.sel.p,S.mode).length;
+return`<h2>Practice</h2><div class="card">${fUI('p')}<div class="lbl">Which questions</div><div class="chips">${[['all','All'],['new','Unattempted'],['wrong','Last wrong'],['star','★ Starred']].map(([k,l])=>`<button class="chip ${S.mode===k?'on':''}" data-a="mode" data-v="${k}">${l}</button>`).join('')}</div><p class="mu">${n} question${n==1?'':'s'} match</p><button class="btn" data-a="pstart">Start practice</button></div>`}
+function practiceView(){const P=S.P;if(P.i>=P.l.length)return`<div class="card center"><h2>Done 🎉</h2><p>${P.c} correct · ${P.w} wrong</p><button class="btn" data-a="pexit">Back</button></div>`;
+const q=qById(P.l[P.i]);return`<div class="bar sticky"><button class="ghost" data-a="pexit">✕</button><b>${P.i+1}/${P.l.length}</b><span class="mu">${P.c}✓ ${P.w}✗</span></div>`+qCard(q,{pick:P.pick,show:P.pick!=null,act:P.pick==null?'pick':''})+(P.pick!=null?`<button class="btn" data-a="pnext">${P.i+1<P.l.length?'Next →':'Finish'}</button>`:`<button class="ghost wide" data-a="pnext">Skip →</button>`)}
+function testHome(){const n=pool(S.sel.t,'all').length;
+return`<h2>Take a test</h2><div class="card">${fUI('t')}<p class="mu">${n} questions available</p><label>Number of questions<input type="number" min="1" data-k="tcnt" value="${S.tcnt}"></label><label>Time (minutes)<input type="number" min="1" data-k="tmin" value="${S.tmin}"></label><label style="display:flex;align-items:center;color:var(--tx)"><input type="checkbox" data-k="neg" ${S.neg?'checked':''}>NEET marking: +4 correct, −1 wrong</label><button class="btn" data-a="tstart">Start test</button></div>`+testHist(10)}
+function testView(){const T=S.T,q=qById(T.l[T.i]),un=T.l.filter(id=>T.a[id]==null).length;
+return`<div class="bar sticky"><span class="tm" id="tm">${fmt(T.end-Date.now())}</span><b>${T.i+1}/${T.l.length}</b><button class="btn sm" data-a="tsubmit">${S.cf==='ts'?`Sure? ${un} left`:'Submit'}</button></div>`+qCard(q,{pick:T.a[q.id],act:'tsel',nometa:1,nostar:1})+`<div class="row"><button class="ghost" data-a="tprev">←</button><button class="ghost ${T.m.has(q.id)?'on':''}" data-a="tmark">⚑ Review</button><button class="ghost" data-a="tclr">Clear</button><button class="btn" style="margin:0" data-a="tnext">→</button></div><div class="pal">`+T.l.map((id,j)=>`<button class="pn ${j===T.i?'cur':''} ${T.a[id]!=null?'ans':''} ${T.m.has(id)?'rev':''}" data-a="tgo" data-i="${j}">${j+1}</button>`).join('')+'</div>'}
+function analysis(T){const m={};T.l.forEach(id=>{const q=qById(id),a=T.a[id],k=q.subject+' › '+q.chapter,r=m[k]=m[k]||{c:0,n:0};r.n++;if(a===q.ans)r.c++});return`<div class="card"><h3>Chapter analysis</h3>`+Object.entries(m).sort((x,y)=>x[1].c/x[1].n-y[1].c/y[1].n).map(([k,r])=>{const p=Math.round(r.c/r.n*100);return`<div style="display:flex;justify-content:space-between"><span>${esc(k)}</span><span class="mu">${r.c}/${r.n} · ${p}%</span></div><div class="bg2"><i style="width:${p}%"></i></div>`}).join('')+'</div>'}
+function resultView(){const T=S.T,pct=Math.round(T.score/T.max*100);
+const items=T.l.map((id,j)=>({q:qById(id),j,a:T.a[id]})).filter(x=>S.rf==='all'||(S.rf==='w'&&x.a!=null&&x.a!==x.q.ans)||(S.rf==='u'&&x.a==null));
+return`<div class="card center"><div class="mu">${T.auto?'Time up — auto submitted':'Submitted'}</div><div class="score">${T.score}/${T.max}</div><div class="mu">${pct}% · time used ${fmt(T.used)}</div><div class="stats"><div><b style="color:var(--ok)">${T.c}</b>Correct</div><div><b style="color:var(--bad)">${T.w}</b>Wrong</div><div><b>${T.u}</b>Skipped</div></div><div class="row"><button class="ghost" data-a="treat" data-v="all">↻ Retry all</button><button class="ghost" data-a="treat" data-v="w">↻ Wrong & skipped</button></div><button class="btn" data-a="tclose">Close</button></div>${analysis(T)}<div class="seg">${[['all','All'],['w','Wrong'],['u','Skipped']].map(([k,l])=>`<button class="${S.rf===k?'on':''}" data-a="rf" data-v="${k}">${l}</button>`).join('')}</div>`+items.map(x=>`<div class="mu" style="margin:6px 4px 0">Q${x.j+1} · ${x.a==null?'Skipped':x.a===x.q.ans?'✓ Correct':'✗ Wrong'}</div>`+qCard(x.q,{pick:x.a,show:true})).join('')}
+function testHist(n){if(!db.tests.length)return'';return`<div class="card"><h3>Test history</h3>`+db.tests.slice(0,n).map(t=>`<button class="ghost wide" style="display:flex;justify-content:space-between;align-items:center;text-align:left" data-a="${t.l?'hopen':''}" data-id="${t.id}"><span>${new Date(t.at).toLocaleDateString()} · ${t.n}Q<br><small class="mu">✓${t.c} ✗${t.w} –${t.u}${t.l?' · tap to analyse / retry':''}</small></span><b>${t.score}/${t.max}</b></button>`).join('')+'</div>'}
+function addView(){const seg=`<div class="seg"><button class="${S.addm==='q'?'on':''}" data-a="am" data-v="q">Question</button><button class="${S.addm==='j'?'on':''}" data-a="am" data-v="j">JSON import</button></div>`;
+if(S.addm==='j')return seg+jsonView();
+const q=S.edit?qById(S.edit):null,n=Math.max(4,q?q.o.length:4),chs=sub=>(db.subjects.find(x=>x.name===sub)||{chapters:[]}).chapters;
+return seg+`<div class="card"><h3>${q?'Edit':'New'} question</h3><label>Subject<input id="fs" list="dl-s" value="${esc(q?q.subject:S.ls)}" placeholder="Physics"></label><datalist id="dl-s">${db.subjects.map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist><label>Chapter<input id="fc" list="dl-c" value="${esc(q?q.chapter:S.lc)}" placeholder="Kinematics"></label><datalist id="dl-c">${chs(q?q.subject:S.ls).map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
+<label>Question (LaTeX: $x^2$ or $$\\frac{a}{b}$$)<textarea id="fq">${esc(q?q.q:'')}</textarea></label><label>Image (optional)<input type="file" accept="image/*" data-f="img"></label><div id="ip">${S.img?`<img class="nimg" src="${S.img}" style="max-height:140px"><button class="ghost" data-a="rmimg">Remove image</button>`:''}</div>
+<div class="lbl">Options — tap the circle for the correct one</div>`+Array.from({length:n},(_,i)=>`<div class="orow"><input type="radio" name="ans" value="${i}" ${q&&q.ans===i?'checked':''}><input id="o${i}" placeholder="Option ${'ABCDEF'[i]}" value="${esc(q?q.o[i]:'')}"></div>`).join('')+`<label>Explanation (optional)<textarea id="fe">${esc(q?q.exp:'')}</textarea></label><div class="row"><button class="ghost" data-a="qprev">Preview</button><button class="btn" style="margin:0" data-a="qsave">${q?'Update':'Save'}</button></div>${q?'<button class="ghost wide" data-a="qcancel">Cancel edit</button>':''}</div><div id="prev"></div>`}
+function jsonView(){return`<div class="card"><h3>Import JSON</h3><p class="mu">Paste JSON or load a .json file. Tip: give your questions to any AI chatbot and ask it to convert them into this format.</p><input type="file" accept=".json,application/json" data-f="json"><textarea id="jt" placeholder="Paste JSON here" style="min-height:140px;margin-top:8px"></textarea><button class="btn" data-a="jimp">Import</button></div><div class="card"><h3>Format</h3><pre>${esc(`{
+ "subject": "Physics",      // optional default
+ "chapter": "Kinematics",   // optional default
+ "questions": [{
+   "subject": "Physics",    // overrides default
+   "chapter": "Kinematics",
+   "q": "A body has $v=u+at$. Find v if u=2, a=3, t=4",
+   "image": "data:image/jpeg;base64,...",  // optional
+   "options": ["10","12","14","16"],
+   "answer": 3,             // 1-4 (or "A"-"D")
+   "explanation": "v = 2 + 12 = 14"
+ }],
+ "notes": [{
+   "subject": "Biology", "chapter": "Cell",
+   "title": "Mitochondria", "body": "Powerhouse...",
+   "tag": "Forgot",         // Important / Forgot / New
+   "image": ""
+ }]
+}`)}</pre><p class="mu">A plain array of questions also works. Images must be data URIs (or upload them with the form). Duplicates are skipped.</p></div>`}
+function importJSON(t){let j=JSON.parse(t);if(Array.isArray(j))j={questions:j};let nq=0,nn=0,bad=0,dup=0;
+(j.questions||[]).forEach(r=>{const s=String(r.subject||j.subject||'').trim(),c=String(r.chapter||j.chapter||'').trim(),o=r.options||r.o,txt=String(r.q||r.question||'');let a=r.answer??r.ans;if(typeof a==='string'&&/^[a-f]$/i.test(a))a=a.toLowerCase().charCodeAt(0)-96;a=+a-1;
+if(!s||!c||!Array.isArray(o)||o.length<2||o.length>6||!(a>=0&&a<o.length)||!(txt||r.image)){bad++;return}
+if(db.questions.some(q=>q.subject===s&&q.chapter===c&&q.q===txt&&q.o.join('|')===o.join('|'))){dup++;return}
+ensure(s,c);db.questions.push({id:uid(),subject:s,chapter:c,q:txt,img:r.image||'',o:o.map(String),ans:a,exp:String(r.explanation||r.exp||'')});nq++});
+(j.notes||[]).forEach(r=>{const s=String(r.subject||j.subject||'').trim(),c=String(r.chapter||j.chapter||'').trim();if(!s||!c||!(r.title||r.body)){bad++;return}ensure(s,c);db.notes.push({id:uid(),subject:s,chapter:c,title:String(r.title||''),body:String(r.body||''),tag:r.tag||'Important',img:r.image||'',at:Date.now()});nn++});
+save();return`Imported ${nq} questions, ${nn} notes${dup?`, ${dup} duplicates skipped`:''}${bad?`, ${bad} invalid skipped`:''}`}
+function exportJSON(){return JSON.stringify({questions:db.questions.map(q=>({subject:q.subject,chapter:q.chapter,q:q.q,image:q.img||undefined,options:q.o,answer:q.ans+1,explanation:q.exp||undefined})),notes:db.notes.map(n=>({subject:n.subject,chapter:n.chapter,title:n.title,body:n.body,tag:n.tag,image:n.img||undefined}))},null,1)}
+function notesView(){const f=db.notes.filter(n=>(!S.nsub||n.subject===S.nsub)&&(!S.nch||n.chapter===S.nch)&&(!S.nq||(n.title+n.body+n.chapter).toLowerCase().includes(S.nq.toLowerCase())));const n=S.nedit?db.notes.find(x=>x.id===S.nedit):null;
+const form=S.nadd?`<div class="card"><h3>${n?'Edit':'New'} note</h3><label>Subject<input id="ns" list="dl-s" value="${esc(n?n.subject:S.ls)}"></label><datalist id="dl-s">${db.subjects.map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist><label>Chapter<input id="nc" list="dl-c" value="${esc(n?n.chapter:S.lc)}"></label><datalist id="dl-c">${[...new Set(db.subjects.flatMap(x=>x.chapters))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist><label>Title<input id="nt" value="${esc(n?n.title:'')}"></label><label>Note (LaTeX ok)<textarea id="nb" style="min-height:120px">${esc(n?n.body:'')}</textarea></label><label>Tag<select id="ng">${['Important','Forgot','New'].map(t=>`<option ${n&&n.tag===t?'selected':''}>${t}</option>`).join('')}</select></label><label>Image (optional)<input type="file" accept="image/*" data-f="img"></label><div id="ip">${S.img?`<img class="nimg" src="${S.img}" style="max-height:140px"><button class="ghost" data-a="rmimg">Remove image</button>`:''}</div><div class="row"><button class="ghost" data-a="ncancel">Cancel</button><button class="btn" style="margin:0" data-a="nsave">Save</button></div></div>`:`<button class="btn" data-a="nnew">＋ New note</button>`;
+return`<h2>Notes</h2>${form}<div class="card" style="margin-top:12px"><div class="chips"><button class="chip ${!S.nsub?'on':''}" data-a="nf" data-v="">All</button>${db.subjects.map(x=>`<button class="chip ${S.nsub===x.name?'on':''}" data-a="nf" data-v="${esc(x.name)}">${esc(x.name)} <i>${db.notes.filter(n=>n.subject===x.name).length}</i></button>`).join('')}</div>${S.nsub?`<div class="chips"><button class="chip ${!S.nch?'on':''}" data-a="nch" data-v="">All chapters</button>${((db.subjects.find(x=>x.name===S.nsub)||{chapters:[]}).chapters).map(c=>`<button class="chip ${S.nch===c?'on':''}" data-a="nch" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>`:''}<input placeholder="Search notes…" data-k="nq" data-r="1" value="${esc(S.nq)}" id="nsearch" style="margin:0"></div>`+(f.length?f.slice().reverse().map(n=>`<div class="card"><div class="meta"><span>${esc(n.subject)} › ${esc(n.chapter)}</span><span class="bdg">${esc(n.tag)}</span></div><b>${esc(n.title)}</b><div class="q">${rich(n.body)}</div>${n.img?`<img class="nimg" src="${n.img}">`:''}<div class="row"><button class="ghost" data-a="nedit" data-id="${n.id}">Edit</button><button class="ghost danger" data-a="ndel" data-id="${n.id}">${S.cf==='dn'+n.id?'Sure?':'Delete'}</button></div></div>`).join(''):'<p class="mu center">No notes yet.</p>')}
+function moreView(){const m=S.more;const back=`<button class="ghost" data-a="more" data-v="menu">← Back</button>`;
+if(m==='bank'){const l=db.questions.filter(q=>(!S.bsub||q.subject===S.bsub)&&(!S.bq||q.q.toLowerCase().includes(S.bq.toLowerCase()))).slice(-100).reverse();return`${back}<h2>Question bank <span class="mu">(${db.questions.length})</span></h2><div class="row"><select data-k="bsub" data-r="1"><option value="">All subjects</option>${db.subjects.map(x=>`<option ${S.bsub===x.name?'selected':''}>${esc(x.name)}</option>`).join('')}</select><input id="bsearch" placeholder="Search…" data-k="bq" data-r="1" value="${esc(S.bq)}"></div>`+l.map(q=>`<div class="card"><div class="meta"><span>${esc(q.subject)} › ${esc(q.chapter)}</span><span>${q.st?`${q.st.a-q.st.w}/${q.st.a} right`:'new'}</span></div><div class="q">${rich(q.q.slice(0,160))}${q.img?' 🖼️':''}</div><div class="row"><button class="ghost" data-a="qedit" data-id="${q.id}">Edit</button><button class="ghost danger" data-a="qdel" data-id="${q.id}">${S.cf==='dq'+q.id?'Sure?':'Delete'}</button></div></div>`).join('')}
+if(m==='manage')return`${back}<h2>Subjects & chapters</h2><div class="card"><label>New subject<input id="ms" placeholder="Chemistry"></label><button class="btn" data-a="addsub">Add subject</button></div>`+db.subjects.map(x=>`<div class="card"><h3>${esc(x.name)} <button class="ghost danger" style="float:right;padding:3px 9px" data-a="delsub" data-v="${esc(x.name)}">${S.cf==='ds'+x.name?'Delete all?':'✕'}</button></h3><div class="chips">${x.chapters.map(c=>`<span class="chip">${esc(c)} <button style="border:0;background:none;color:var(--bad)" data-a="delch" data-s="${esc(x.name)}" data-v="${esc(c)}">${S.cf==='dc'+x.name+c?'Sure?':'×'}</button></span>`).join('')}</div><div class="row"><input id="mc-${x.id}" placeholder="New chapter"><button class="ghost" data-a="addch" data-v="${esc(x.name)}" data-id="${x.id}">Add</button></div></div>`).join('')+'<p class="mu">Deleting a subject or chapter also deletes its questions and notes.</p>';
+if(m==='backup')return`${back}<h2>Backup</h2><div class="card"><p class="mu">Your data lives only in this browser. Copy a backup now and then; paste it into Add → JSON import to restore.</p><button class="btn" data-a="exp">Generate backup</button><textarea id="bk" readonly style="min-height:160px;margin-top:8px" placeholder="Backup appears here"></textarea><button class="ghost wide" data-a="copy">Copy</button></div>`;
+if(m==='hist')return`${back}<h2>History</h2>${testHist(50)||'<p class="mu">No tests yet.</p>'}`;
+const A=db.questions.reduce((s,q)=>(q.st&&(s.a+=q.st.a,s.w+=q.st.w),s),{a:0,w:0}),acc=A.a?Math.round((A.a-A.w)/A.a*100):0;
+const sub=db.subjects.map(x=>{const t=db.questions.filter(q=>q.subject===x.name&&q.st).reduce((s,q)=>(s.a+=q.st.a,s.w+=q.st.w,s),{a:0,w:0}),p=t.a?Math.round((t.a-t.w)/t.a*100):0;return`<div style="display:flex;justify-content:space-between"><span>${esc(x.name)}</span><span class="mu">${t.a?p+'% ('+t.a+')':'—'}</span></div><div class="bg2"><i style="width:${p}%"></i></div>`}).join('');
+const wk=[];db.subjects.forEach(x=>x.chapters.forEach(c=>{const t=db.questions.filter(q=>q.subject===x.name&&q.chapter===c&&q.st).reduce((s,q)=>(s.a+=q.st.a,s.w+=q.st.w,s),{a:0,w:0});if(t.a>=3)wk.push([x.name+' › '+c,(t.a-t.w)/t.a])}));wk.sort((a,b)=>a[1]-b[1]);
+return`<h2>Progress</h2><div class="card"><div class="stats"><div><b>${db.questions.length}</b>Questions</div><div><b>${db.notes.length}</b>Notes</div><div><b>${acc}%</b>Accuracy</div></div>${sub||'<p class="mu">Add questions to see stats.</p>'}</div>`+(wk.length?`<div class="card"><h3>Weak chapters</h3>${wk.slice(0,5).map(w=>`<div style="display:flex;justify-content:space-between"><span>${esc(w[0])}</span><b class="danger">${Math.round(w[1]*100)}%</b></div>`).join('')}</div>`:'')+[['bank','🗂️ Question bank'],['manage','📚 Subjects & chapters'],['hist','🏆 Test history'],['backup','💾 Backup / export']].map(([k,l])=>`<button class="ghost wide" style="text-align:left" data-a="more" data-v="${k}">${l}</button>`).join('')}
+/* render */
+function render(){const run=(S.T)||(S.P);$('#nav').style.display=run?'none':'flex';document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.tab));
+$('#app').innerHTML=S.T?(S.T.done?resultView():testView()):S.P?practiceView():({practice:practiceHome,test:testHome,add:addView,notes:notesView,more:moreView})[S.tab]();ts()}
+function formQ(){const g=id=>($('#'+id)?.value||'').trim(),o=[];for(let i=0;i<6;i++){const e=$('#o'+i);if(e)o.push(e.value.trim())}while(o.length>4&&!o[o.length-1])o.pop();const a=document.querySelector('input[name=ans]:checked');
+if(!g('fs')||!g('fc'))return'Subject and chapter are required';if(!g('fq')&&!S.img)return'Add question text or an image';if(o.some(x=>!x))return'Fill all options';if(!a)return'Select the correct option';return{subject:g('fs'),chapter:g('fc'),q:g('fq'),img:S.img,o,ans:+a.value,exp:g('fe')}}
+function act(a,d){const prev=S.cf;S.cf=null;const sure=k=>{if(prev===k)return true;S.cf=k;render();return false};
+const tog=(set,v)=>set.has(v)?set.delete(v):set.add(v);
+switch(a){
+case'tab':S.tab=d.v;S.more='menu';S.edit=S.nedit=null;S.nadd=false;S.img='';return render();
+case'fs':{const s=S.sel[d.w];tog(s.subs,d.v);[...s.chs].forEach(k=>{if(!s.subs.has(k.split('||')[0]))s.chs.delete(k)});return render()}
+case'fc':tog(S.sel[d.w].chs,d.v);return render();
+case'mode':S.mode=d.v;return render();
+case'pstart':{const l=pool(S.sel.p,S.mode);if(!l.length)return toast('No questions match');S.P={l:shuffle(l.map(q=>q.id)),i:0,pick:null,c:0,w:0};scrollTo(0,0);return render()}
+case'pick':{const P=S.P,q=qById(P.l[P.i]);if(P.pick!=null)return;P.pick=+d.i;const ok=P.pick===q.ans;ok?P.c++:P.w++;record(q,ok);return render()}
+case'pnext':S.P.i++;S.P.pick=null;scrollTo(0,0);return render();
+case'pexit':S.P=null;return render();
+case'star':{const q=qById(d.id);q.star=!q.star;save();return render()}
+case'tstart':{const l=pool(S.sel.t,'all');if(!l.length)return toast('No questions match');const n=Math.min(Math.max(1,+S.tcnt||30),l.length),m=Math.max(1,+S.tmin||30);S.T={l:shuffle(l.map(q=>q.id)).slice(0,n),a:{},m:new Set,i:0,start:Date.now(),end:Date.now()+m*60000,dur:m*60000,neg:S.neg};if(n<S.tcnt)toast(`Only ${n} questions available`);scrollTo(0,0);return render()}
+case'tsel':{const T=S.T,id=T.l[T.i];T.a[id]=T.a[id]===+d.i?undefined:+d.i;if(T.a[id]===undefined)delete T.a[id];return render()}
+case'tclr':{const T=S.T;delete T.a[T.l[T.i]];return render()}
+case'tmark':{const T=S.T;tog(T.m,T.l[T.i]);return render()}
+case'tnext':if(S.T.i<S.T.l.length-1)S.T.i++;scrollTo(0,0);return render();
+case'tprev':if(S.T.i>0)S.T.i--;scrollTo(0,0);return render();
+case'tgo':S.T.i=+d.i;scrollTo(0,0);return render();
+case'tsubmit':if(sure('ts'))finish(false);return;
+case'tclose':S.T=null;S.rf='all';scrollTo(0,0);return render();
+case'rf':S.rf=d.v;return render();
+case'nf':S.nsub=d.v;S.nch='';return render();
+case'nch':S.nch=d.v;return render();
+case'hopen':{const t=db.tests.find(x=>x.id===d.id);if(!t||!t.l)return toast('Details not saved for this older test');S.T={l:t.l.filter(id=>qById(id)),a:t.a||{},m:new Set,i:0,done:true,hist:true,auto:false,c:t.c,w:t.w,u:t.u,score:t.score,max:t.max,used:t.used,neg:t.neg,dur:t.dur||t.used};S.rf='all';scrollTo(0,0);return render()}
+case'treat':{const T=S.T;let l=T.l.filter(id=>qById(id));if(d.v==='w')l=l.filter(id=>T.a[id]!==qById(id).ans);if(!l.length)return toast('Nothing to retry');const dur=Math.max(60000,Math.round((T.dur||l.length*72000)*l.length/T.l.length));S.T={l:shuffle(l),a:{},m:new Set,i:0,start:Date.now(),end:Date.now()+dur,dur,neg:T.neg};scrollTo(0,0);return render()}
+case'am':S.addm=d.v;return render();
+case'rmimg':S.img='';return render();
+case'qprev':{const q=formQ();if(typeof q==='string')return toast(q);$('#prev').innerHTML='<div class="lbl">Preview</div>'+qCard(q,{show:true,nostar:1,pick:q.ans});return ts()}
+case'qsave':{const q=formQ();if(typeof q==='string')return toast(q);ensure(q.subject,q.chapter);if(S.edit){Object.assign(qById(S.edit),q);S.edit=null;toast('Updated')}else{db.questions.push({id:uid(),...q});toast('Saved ✓')}S.ls=q.subject;S.lc=q.chapter;S.img='';save();scrollTo(0,0);return render()}
+case'qedit':{const q=qById(d.id);S.edit=d.id;S.img=q.img||'';S.tab='add';S.addm='q';scrollTo(0,0);return render()}
+case'qcancel':S.edit=null;S.img='';return render();
+case'qdel':if(sure('dq'+d.id)){db.questions=db.questions.filter(q=>q.id!==d.id);save();toast('Deleted');render()}return;
+case'jimp':try{const m=importJSON($('#jt').value);toast(m);$('#jt').value='';render()}catch(e){toast('Invalid JSON: '+e.message.slice(0,60))}return;
+case'nnew':S.nadd=true;S.nedit=null;S.img='';return render();
+case'ncancel':S.nadd=false;S.nedit=null;S.img='';return render();
+case'nedit':{const n=db.notes.find(x=>x.id===d.id);S.nadd=true;S.nedit=d.id;S.img=n.img||'';scrollTo(0,0);return render()}
+case'nsave':{const g=id=>$('#'+id).value.trim(),r={subject:g('ns'),chapter:g('nc'),title:g('nt'),body:g('nb'),tag:g('ng'),img:S.img};if(!r.subject||!r.chapter||!(r.title||r.body))return toast('Subject, chapter and some content needed');ensure(r.subject,r.chapter);if(S.nedit)Object.assign(db.notes.find(x=>x.id===S.nedit),r);else db.notes.push({id:uid(),at:Date.now(),...r});S.ls=r.subject;S.lc=r.chapter;S.nadd=false;S.nedit=null;S.img='';save();toast('Note saved ✓');return render()}
+case'ndel':if(sure('dn'+d.id)){db.notes=db.notes.filter(n=>n.id!==d.id);save();render()}return;
+case'more':S.more=d.v;return render();
+case'addsub':{const v=$('#ms').value.trim();if(v){ensure(v);save();render()}return}
+case'addch':{const v=$('#mc-'+d.id).value.trim();if(v){ensure(d.v,v);save();render()}return}
+case'delsub':if(sure('ds'+d.v)){db.subjects=db.subjects.filter(x=>x.name!==d.v);db.questions=db.questions.filter(q=>q.subject!==d.v);db.notes=db.notes.filter(n=>n.subject!==d.v);S.sel.p.subs.delete(d.v);S.sel.t.subs.delete(d.v);save();render()}return;
+case'delch':if(sure('dc'+d.s+d.v)){const x=db.subjects.find(z=>z.name===d.s);x.chapters=x.chapters.filter(c=>c!==d.v);db.questions=db.questions.filter(q=>!(q.subject===d.s&&q.chapter===d.v));db.notes=db.notes.filter(n=>!(n.subject===d.s&&n.chapter===d.v));save();render()}return;
+case'exp':$('#bk').value=exportJSON();return;
+case'copy':{const t=$('#bk');if(!t.value)t.value=exportJSON();t.select();try{navigator.clipboard.writeText(t.value).then(()=>toast('Copied'),()=>{document.execCommand('copy');toast('Copied')})}catch(e){try{document.execCommand('copy');toast('Copied')}catch(_){toast('Select & copy manually')}}return}
+}}
+function finish(auto){const T=S.T;if(!T||T.done)return;T.done=true;T.auto=auto;let c=0,w=0,u=0;T.l.forEach(id=>{const q=qById(id),a=T.a[id];if(a==null)u++;else{const ok=a===q.ans;ok?c++:w++;record(q,ok)}});T.c=c;T.w=w;T.u=u;T.score=c*4-(T.neg?w:0);T.max=T.l.length*4;T.used=Math.min(T.dur,Date.now()-T.start);db.tests.unshift({id:uid(),at:Date.now(),c,w,u,score:T.score,max:T.max,used:T.used,n:T.l.length,l:T.l,a:T.a,neg:T.neg,dur:T.dur});db.tests=db.tests.slice(0,50);save();scrollTo(0,0);render()}
+/* events */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b&&b.dataset.a)act(b.dataset.a,b.dataset)});
+document.addEventListener('input',e=>{const t=e.target,k=t.dataset.k;if(k){S[k]=t.type==='checkbox'?t.checked:t.value;if(t.dataset.r){const p=t.selectionStart;render();const n=$('#nsearch')||$('#bsearch');if(n&&t.tagName==='INPUT'){n.focus();n.setSelectionRange(p,p)}}}
+if(t.id==='fs'||t.id==='ns'){const x=db.subjects.find(z=>z.name===t.value.trim());const dl=$('#dl-c');if(dl)dl.innerHTML=(x?x.chapters:[]).map(c=>`<option value="${esc(c)}">`).join('')}});
+document.addEventListener('change',async e=>{const t=e.target,f=t.dataset.f,k=t.dataset.k;if(k&&t.dataset.r){S[k]=t.value;render()}
+if(f==='img'&&t.files[0]){S.img=await toImg(t.files[0]);$('#ip').innerHTML=`<img class="nimg" src="${S.img}" style="max-height:140px"><button class="ghost" data-a="rmimg">Remove image</button>`}
+if(f==='json'&&t.files[0])$('#jt').value=await t.files[0].text()});
+setInterval(()=>{const T=S.T;if(!T||T.done)return;const r=T.end-Date.now(),el=$('#tm');if(el){el.textContent=fmt(r);el.classList.toggle('low',r<60000)}if(r<=0)finish(true)},500);
+await load();render();
+</script>
+<script>
+    if("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js",).then(()=>{
+            console.log("Service worker registered successfully.");
+        }).catch((err)=>{
+            console.log("Error : ", err);
+        })
+    }
+</script>
+</body></html>

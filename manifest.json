@@ -3,7 +3,7 @@
   "id": "/exam-vault/",
   "name": "Exam Vault",
   "short_name": "Exam Vault",
-  "start_url": "/exam-vault/",
+  "start_url": "/ExamVault/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",

@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "filora-cache-v4";
+const CACHE_NAME = "filora-cache-v1";
 
 const ASSETS_TO_CACHE = [
   "/ExamVault/",

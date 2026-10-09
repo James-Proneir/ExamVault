@@ -1,4 +1,4 @@
-# 🧬 NEET Prep Vault
+# 🧬 Exam Vault
 
 A mobile-first, single-file study app for NEET preparation. Store important questions and notes, practice them one by one, or take timed tests. Everything is saved locally in your browser.
 
